@@ -2,16 +2,22 @@ package br.com.cad.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.constraints.Length;
@@ -57,6 +63,25 @@ public class Produto implements Serializable{
     @JoinColumn(name = "nome_marca",referencedColumnName = "id",nullable = false)
     @ForeignKey(name = "fk_marca")
     private Marca marca;
+   
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "desejos",//nome da tbl que sera criada
+            joinColumns = 
+                    @JoinColumn(name = "produto",referencedColumnName = "id",nullable = false),//colunas para realizar a junção
+            inverseJoinColumns = 
+                    @JoinColumn(name = "pessoa_fisica",referencedColumnName = "id",nullable = false),//colunas para realizar a junção
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"pessoa_fisica","produto"})}//contraint unica produto para a pessoa com mesmo id
+                
+            )
+    private List<PessoaFisica> pessoaFisicas = new ArrayList<>();
+
+    public List<PessoaFisica> getPessoaFisicas() {
+        return pessoaFisicas;
+    }
+
+    public void setPessoaFisicas(List<PessoaFisica> pessoaFisicas) {
+        this.pessoaFisicas = pessoaFisicas;
+    }
     
     public Produto() {
     }
