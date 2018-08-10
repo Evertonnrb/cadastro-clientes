@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/PessoaFisica.java</file>
-            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Pessoa.java</file>
-            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Permissao.java</file>
-            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Produto.java</file>
+            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Parcela.java</file>
+            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Compra.java</file>
+            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/VendaItens.java</file>
+            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/ParcelaId.java</file>
+            <file>file:/home/eveton/Development/Java/JPA/ifsulII/src/br/com/cad/domain/Venda.java</file>
         </group>
     </open-files>
 </project-private>
