@@ -2,17 +2,20 @@ package br.com.cad.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -27,18 +30,18 @@ public class Compra implements Serializable {
 
     @Column(name = "data_compra", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull(message = "Data da compra tem que ser informada")
     private Calendar data;
 
     @Column(name = "valor_total", nullable = false, precision = 9, scale = 2)
-    @NotNull(message = "valor da compra deve ser informado")
     private BigDecimal valorTotal;
 
     @Column(name = "numero_nota", nullable = false, length = 11)
-    @Length(max = 11, message = "Número da nota exede valores {max} maxímos permitidos")
-    @NotNull(message = "Nota não pode estar em branco")
+    @NotNull(message = "Informe o número da nota")
     private Integer numeroNota;
 
+    @OneToMany(mappedBy = "compra",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<CompraItem> compraItems = new ArrayList<>();
+    
     public Compra() {
     }
 
@@ -46,6 +49,18 @@ public class Compra implements Serializable {
         this.data = data;
         this.valorTotal = valorTotal;
         this.numeroNota = numeroNota;
+    }
+    
+    public void adicionarItens(CompraItem obj){
+        obj.setCompra(this);
+        valorTotal.add( obj.getValorTotal());
+        this.compraItems.add(obj);
+    }
+    
+    public void removerItem(int index){
+        CompraItem compraItem = (CompraItem) this.compraItems.get(index);
+        valorTotal.subtract(compraItem.getValorTotal());
+        this.compraItems.remove(valorTotal);
     }
 
     public Calendar getData() {
